@@ -7,6 +7,7 @@ from data.TUs import TUsDataset
 from data.SBMs import SBMsDataset
 from data.TSP import TSPDataset
 from data.CitationGraphs import CitationGraphsDataset
+from data.CSL import CSLDataset
 
 def LoadData(DATASET_NAME):
     """
@@ -40,3 +41,7 @@ def LoadData(DATASET_NAME):
     CITATIONGRAPHS_DATASETS = ['CORA', 'CITESEER', 'PUBMED']
     if DATASET_NAME in CITATIONGRAPHS_DATASETS: 
         return CitationGraphsDataset(DATASET_NAME)
+    
+    # handling for the CSL (Circular Skip Links) Dataset
+    if DATASET_NAME == 'CSL': 
+        return CSLDataset(DATASET_NAME)

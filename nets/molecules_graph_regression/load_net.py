@@ -12,12 +12,17 @@ from nets.molecules_graph_regression.mo_net import MoNet as MoNet_
 from nets.molecules_graph_regression.diffpool_net import DiffPoolNet
 from nets.molecules_graph_regression.mlp_net import MLPNet
 
+from nets.molecules_graph_regression.ChebNet import ChebNet
+
 
 def GatedGCN(net_params):
     return GatedGCNNet(net_params)
 
 def GCN(net_params):
     return GCNNet(net_params)
+
+def Cheb(net_params):
+    return ChebNet(net_params)
 
 def GAT(net_params):
     return GATNet(net_params)
@@ -46,7 +51,8 @@ def gnn_model(MODEL_NAME, net_params):
         'GIN': GIN,
         'MoNet': MoNet,
         'DiffPool': DiffPool,
-        'MLP': MLP
+        'MLP': MLP,
+        'ChebNet': Cheb
     }
         
     return models[MODEL_NAME](net_params)

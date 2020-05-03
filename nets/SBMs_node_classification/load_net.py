@@ -10,6 +10,7 @@ from nets.SBMs_node_classification.graphsage_net import GraphSageNet
 from nets.SBMs_node_classification.mlp_net import MLPNet
 from nets.SBMs_node_classification.gin_net import GINNet
 from nets.SBMs_node_classification.mo_net import MoNet as MoNet_
+from nets.SBMs_node_classification.ChebNet import ChebNet
 
 
 def GatedGCN(net_params):
@@ -33,6 +34,9 @@ def GIN(net_params):
 def MoNet(net_params):
     return MoNet_(net_params)
 
+def Cheb(net_params):
+    return ChebNet(net_params)
+
 def gnn_model(MODEL_NAME, net_params):
     models = {
         'GatedGCN': GatedGCN,
@@ -41,7 +45,8 @@ def gnn_model(MODEL_NAME, net_params):
         'GraphSage': GraphSage,
         'MLP': MLP,
         'GIN': GIN,
-        'MoNet': MoNet
+        'MoNet': MoNet,
+        'ChebNet': Cheb
     }
         
     return models[MODEL_NAME](net_params)

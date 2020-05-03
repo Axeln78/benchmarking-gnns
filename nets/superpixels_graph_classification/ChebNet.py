@@ -5,9 +5,9 @@ import torch.nn.functional as F
 import dgl
 
 """
-    ChebNet
+    ChebNet - Superpix
 """
-from layers.ChebLayer import Cheb_layer
+from layers.Cheb_layer import ChebLayer
 from layers.mlp_readout_layer import MLPReadout
 
 class ChebNet(nn.Module):
@@ -24,20 +24,21 @@ class ChebNet(nn.Module):
         self.graph_norm = net_params['graph_norm']
         self.batch_norm = net_params['batch_norm']
         self.residual = net_params['residual']
+        self.k = net_params['k']
         
         self.embedding_h = nn.Linear(in_dim, hidden_dim)
         self.in_feat_dropout = nn.Dropout(in_feat_dropout)
         
-        self.layers = nn.ModuleList([ChebLayer(hidden_dim, hidden_dim, k, F.relu, dropout,
+        self.layers = nn.ModuleList([ChebLayer(hidden_dim, hidden_dim, self.k, F.relu, dropout,
                                               self.graph_norm, self.batch_norm, self.residual) for _ in range(n_layers-1)])
-        self.layers.append(ChebLayer(hidden_dim, out_dim, k, F.relu, dropout, self.graph_norm, self.batch_norm, self.residual))
+        self.layers.append(ChebLayer(hidden_dim, out_dim, self.k, F.relu, dropout, self.graph_norm, self.batch_norm, self.residual))
         self.MLP_layer = MLPReadout(out_dim, n_classes)        
 
     def forward(self, g, h, e, snorm_n, snorm_e):
         h = self.embedding_h(h)
         h = self.in_feat_dropout(h)
         for conv in self.layers:
-            h = conv(g, h, k, snorm_n)
+            h = conv(g, h, snorm_n )
         g.ndata['h'] = h
         
         if self.readout == "sum":

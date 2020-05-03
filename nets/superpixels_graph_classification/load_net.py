@@ -11,6 +11,7 @@ from nets.superpixels_graph_classification.gin_net import GINNet
 from nets.superpixels_graph_classification.mo_net import MoNet as MoNet_
 from nets.superpixels_graph_classification.diffpool_net import DiffPoolNet
 from nets.superpixels_graph_classification.mlp_net import MLPNet
+from nets.superpixels_graph_classification.ChebNet import ChebNet
 
 
 def GatedGCN(net_params):
@@ -18,6 +19,9 @@ def GatedGCN(net_params):
 
 def GCN(net_params):
     return GCNNet(net_params)
+
+def Cheb(net_params):
+    return ChebNet(net_params)
 
 def GAT(net_params):
     return GATNet(net_params)
@@ -46,7 +50,8 @@ def gnn_model(MODEL_NAME, net_params):
         'GIN': GIN,
         'MoNet': MoNet,
         'DiffPool': DiffPool,
-        'MLP': MLP
+        'MLP': MLP,
+        'ChebNet': Cheb
     }
         
     return models[MODEL_NAME](net_params)

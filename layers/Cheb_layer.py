@@ -88,8 +88,9 @@ class ChebLayer(nn.Module):
 
             # X_1(f)
             if self._k > 1:
-                re_norm = 2. / lambda_max
+                re_norm = (2. / lambda_max).to(feature.device)
                 h = unnLaplacian(X_0, D_sqrt, g)
+                #print('h',h,'norm',re_norm,'X0',X_0)
                 X_1 = - re_norm * h + X_0 * (re_norm - 1)
                 
                 Xt = torch.cat((Xt, X_1), 1)
@@ -115,6 +116,8 @@ class ChebLayer(nn.Module):
        
         if self.activation:
             h = self.activation(h)
+            
+        #Residual connection
         
             
         h = self.dropout(h)

@@ -57,6 +57,7 @@ class ChebLayer(nn.Module):
 
         
     def forward(self, g, feature, snorm_n, lambda_max=None):
+        h_in = feature   # to be used for residual connection
 
         def unnLaplacian(feature, D_sqrt, graph):
             """ Operation D^-1/2 A D^-1/2 """
@@ -117,7 +118,8 @@ class ChebLayer(nn.Module):
         if self.activation:
             h = self.activation(h)
             
-        #Residual connection
+        if self.residual:
+            h = h_in + h # residual connection
         
             
         h = self.dropout(h)

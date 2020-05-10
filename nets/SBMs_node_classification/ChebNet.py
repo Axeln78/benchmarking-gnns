@@ -40,10 +40,10 @@ class ChebNet(nn.Module):
         
         h = self.embedding_h(h)
         h = self.in_feat_dropout(h)
-        
+        lambda_max = dgl.laplacian_lambda_max(g)
         # Cheb
         for conv in self.layers:
-            h = conv(g, h, snorm_n) #, lambda_max = [2]*128)
+            h = conv(g, h, snorm_n, lambda_max) #, lambda_max = [2]*128)
 
         # output
         h_out = self.MLP_layer(h)

@@ -22,7 +22,7 @@ def train_epoch(model, optimizer, device, data_loader, epoch):
     for iter, (batch_graphs, batch_labels, batch_snorm_n, batch_snorm_e) in enumerate(data_loader):
         #edge removal
         #print('before',batch_graphs.number_of_edges())
-        batch_graphs = rm_rand_edges(batch_graphs, random.uniform(0,0.1))
+        batch_graphs = rm_rand_edges(batch_graphs, random.uniform(0,0.4))
         #print('after',batch_graphs.number_of_edges())
         #rest of the pipe
         batch_x = batch_graphs.ndata['feat'].to(device)  # num x feat

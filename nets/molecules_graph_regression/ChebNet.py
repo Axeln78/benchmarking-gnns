@@ -38,10 +38,10 @@ class ChebNet(nn.Module):
     def forward(self, g, h, e, snorm_n, snorm_e):
         h = self.embedding_h(h)
         h = self.in_feat_dropout(h)
-        lambda_max = dgl.laplacian_lambda_max(g)
-
+        #lambda_max = dgl.laplacian_lambda_max(g)
+        
         for conv in self.layers:
-            h = conv(g, h, snorm_n, lambda_max)
+            h = conv(g, h, snorm_n) #, lambda_max)
         g.ndata['h'] = h
         
         if self.readout == "sum":

@@ -74,7 +74,7 @@ class ChebLayer(nn.Module):
                     lambda_max = dgl.laplacian_lambda_max(g)
                 except BaseException:
                     # if the largest eigonvalue is not found
-                    lambda_max = [2]
+                    lambda_max = [2] * g.batch_size
 
             if isinstance(lambda_max, list):
                 lambda_max = torch.Tensor(lambda_max).to(feature.device)

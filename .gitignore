@@ -25,4 +25,5 @@ data/TSP/*.pkl
 data/TSP/*.zip
 data/TSP/pyconcorde/
 
-
+# All scripts 
+script*
